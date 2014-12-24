@@ -16,28 +16,19 @@ window.addEvent('load', function() {
     window.requestAnimationFrame((function () {
         env.gameLoop();
     }));
-});
-/*
-window.addEvent('load', function() {
-    new Enviroment();
 
-    window.requestAnimationFrame((function () {
-	env.gameLoop();
-    }));
-
-    // unpause button :)
-    $('unpause').addEvent('click', function(e) {
-	env.unpause();
+    $('unpause').addEvent('click', function() {
+        env.unpause();
     });
 });
-*/
 
 // Automagic pause if you loose focus of the game
-/*
 window.addEvent('blur', function() {
     env.pause();
 });
-*/
+
+
+
 
 
 // Record keypresses

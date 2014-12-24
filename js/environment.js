@@ -30,8 +30,36 @@ var Environment = new Class({
 		self.gameLoop();
 	    }));
 	}
+    },
+    pause: function() {
+	this.options.pause = true;
+
+	$('pausescreen').setStyle('display', 'block');
+    },
+    unpause: function() {
+	var self = this,
+	    time = Date.now();
+
+	$('pausescreen').setStyle('display', 'none');
+
+	/**
+	 * Update all timingevents
+	 */
+	//this.options.player.options.lastUpdateTime    = time;
+	//this.options.starfield.options.lastUpdateTime = time;
+
+	this.options.pause = false;
+
+	window.requestAnimationFrame((function() {
+	    self.gameLoop();
+	}));
     }
 });
+
+
+
+
+
 
 var Enviroment_old = new Class({
     Implements: [ Options ],
@@ -117,10 +145,5 @@ var Enviroment_old = new Class({
 	window.requestAnimationFrame((function() {
 	    self.gameLoop();
 	}));
-    },
-    pause: function() {
-	this.options.pause = true;
-
-	$('pausescreen').setStyle('display', 'block');
     }
 });
