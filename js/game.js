@@ -12,6 +12,10 @@ var env;
  */
 window.addEvent('load', function() {
     env = new Environment();
+
+    window.requestAnimationFrame((function () {
+        env.gameLoop();
+    }));
 });
 /*
 window.addEvent('load', function() {

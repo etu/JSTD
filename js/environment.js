@@ -19,6 +19,17 @@ var Environment = new Class({
         }
 
         return this;
+    },
+    gameLoop: function() {
+        console.log('Request frame');
+
+	if(!this.options.pause) {
+            var self = this;
+
+	    window.requestAnimationFrame((function() {
+		self.gameLoop();
+	    }));
+	}
     }
 });
 
