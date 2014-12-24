@@ -1,0 +1,30 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #222;
+}
+
+#gameWrapper {
+    width: 640px;
+    height: 480px;
+    margin: auto;
+}
+
+canvas {
+    position: absolute;
+}
+
+canvas#background {
+    background: #000;
+}
+
+#pausescreen {
+    position: absolute;
+    width: 640px;
+    height: 480px;
+    color: white;
+    text-align: center;
+    display: none;
+}
