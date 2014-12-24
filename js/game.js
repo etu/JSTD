@@ -3,8 +3,7 @@
 
 console.log('loaded');
 
-var env;
-//var env, keyStates = {};
+var env, keyStates = {};
 
 
 /**
