@@ -62,29 +62,11 @@ var Environment = new Class({
 
 
 var Enviroment_old = new Class({
-    Implements: [ Options ],
-    options: {
-	gameObjects: [],
-	width:  640,
-	height: 480,
-	pause:  false
-    },
     initialize: function(options) {
-	env = this; // Set this to the global env variable
-
-	this.setOptions(options);
-
-	this.options.ctxs = {
-	    background: $('background').getContext('2d'),
-	    screen:     $('screen').getContext('2d')
-	}
-
 	this.options.starfield = new StarField();
 	this.options.player    = new Player();
     },
     gameLoop: function() {
-	var self = this;
-
 	/**
 	 * Move ALL the things!
 	 */
@@ -109,41 +91,5 @@ var Enviroment_old = new Class({
 	 * Move/Draw starfield, it got it's own canvas and own life anyways
 	 */
 	self.options.starfield.move();
-
-	/**
-	 * If not paused, request a new frame
-	 */
-	if(!self.options.pause) {
-	    window.requestAnimationFrame((function() {
-		self.gameLoop();
-	    }));
-	}
-    },
-    unpause: function() {
-	var self = this,
-	    time = Date.now();
-
-	/**
-	 * Hide the pausescreen
-	 */
-	$('pausescreen').setStyle('display', 'none');
-
-	/**
-	 * Update all timingevents
-	 */
-	this.options.player.options.lastUpdateTime    = time;
-	this.options.starfield.options.lastUpdateTime = time;
-
-	/**
-	 * unpause
-	 */
-	this.options.pause = false;
-
-	/**
-	 * Request a new timed frame
-	 */
-	window.requestAnimationFrame((function() {
-	    self.gameLoop();
-	}));
     }
 });
