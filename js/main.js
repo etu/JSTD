@@ -62,33 +62,3 @@ String.prototype.lpad = function(padString, length) {
 
     return str;
 }
-
-
-
-/**
- * BaseClass with basic creating of objects and basic structure
- */
-/*
-var BaseClass = new Class({
-    Implements: [ Options ],
-    options: {
-        lastUpdateTime: Date.now(),
-        x: 0,
-        y: 0
-    },
-    initialize: function(options) {
-        // Override some default options, if I put the random operations
-        // in the options object, it will be the same random for all objects :-)
-        this.options.x = Number.random(0, env.width);
-        this.options.y = Number.random(0, env.height);
-
-        this.setOptions(options);
-
-        env.gameObjects.push(this);
-    },
-    move: function() {
-    },
-    draw: function() {
-    }
-});
-*/
