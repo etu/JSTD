@@ -31,27 +31,27 @@ var Environment = new Class({
         /**
          * Move ALL the things!
          */
+        var time = Date.now();
+
         /*
           self.options.player.move();
-
-          Array.each(self.options.gameObjects, function(object) {
-              object.move();
-          });
         */
+        Array.each(this.options.gameObjects, function(object) {
+            object.update(time);
+        });
 
 
         /**
          * Draw ALL the things!
          */
         /*
-          self.options.ctxs.screen.clearRect(0, 0, self.options.width, self.options.height);
-
           self.options.player.draw();
-
-          Array.each(self.options.gameObjects, function(object) {
-              object.draw();
-          });
         */
+        this.options.ctxs.screen.clearRect(0, 0, this.options.width, this.options.height);
+
+        Array.each(this.options.gameObjects, function(object) {
+            object.draw();
+        });
 
 
         /**
