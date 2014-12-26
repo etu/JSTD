@@ -79,8 +79,9 @@ var Environment = new Class({
         /**
          * Update all timingevents
          */
-        //this.options.player.options.lastUpdateTime    = time;
-        //this.options.starfield.options.lastUpdateTime = time;
+        Array.each(this.options.gameObjects, function (object) {
+            object.options.lastUpdateTime = time;
+        });
 
         this.options.pause = false;
 
