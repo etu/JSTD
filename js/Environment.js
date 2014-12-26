@@ -42,6 +42,16 @@ var Environment = new Class({
 
 
         /**
+         * Remove dead things
+         */
+        Array.each(this.options.gameObjects, function(object, key) {
+            if (object.options.remove) {
+                delete this.options.gameObjects[key];
+            }
+        }, this);
+
+
+        /**
          * Draw ALL the things!
          */
         /*
