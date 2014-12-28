@@ -36,9 +36,13 @@ var Map = new Class({
 
         var cCol = 0;
         var cRow = 0;
+        var pathMap = [];
 
         Array.each(this.map, function(row) {
             Array.each(row, function(col) {
+                /**
+                 * Draw Tile
+                 */
                 this.ctx.fillStyle = this.options.colors[col];
                 this.ctx.beginPath();
                 this.ctx.rect(
@@ -50,11 +54,20 @@ var Map = new Class({
                 this.ctx.closePath();
                 this.ctx.fill();
 
+                /**
+                 * Add cooardinate to map of tiles that enemies may walk in
+                 */
+                if (col == 1) {
+                    pathMap.push([cCol, cRow]);
+                }
+
                 cCol++;
             }, this);
 
             cCol = 0;
             cRow++;
         }, this);
+
+        this.pathMap = pathMap;
     }
 });
