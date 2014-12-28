@@ -6,10 +6,7 @@
 var Map = new Class({
     Implements: [ Options ],
     options: {
-        colors: {
-            0: '#FF00FF',
-            1: '#FFFF00'
-        }
+        colors: [ '#054A11', '#411414' ]
     },
     map: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -29,6 +26,7 @@ var Map = new Class({
         this.setOptions(options);
     },
     draw: function() {
+
         if (this.ctx) { // If ctx is defined, chicken out, we don't redraw this.
             return;
         }
@@ -36,22 +34,27 @@ var Map = new Class({
         this.ctx = env.options.ctxs.background;
         this.options.gridSize = env.options.gridSize;
 
-        var drawX = 0;
-        var drawY = 0;
+        var cCol = 0;
+        var cRow = 0;
 
         Array.each(this.map, function(row) {
             Array.each(row, function(col) {
                 this.ctx.fillStyle = this.options.colors[col];
                 this.ctx.beginPath();
-                this.ctx.rect(drawX, drawY, this.options.gridSize, this.options.gridSize);
+                this.ctx.rect(
+                    cCol * this.options.gridSize, // X
+                    cRow * this.options.gridSize, // Y
+                    this.options.gridSize,        // Width
+                    this.options.gridSize         // Height
+                );
                 this.ctx.closePath();
                 this.ctx.fill();
 
-                drawX += this.options.gridSize;
+                cCol++;
             }, this);
 
-            drawX = 0;
-            drawY += this.options.gridSize;
+            cCol = 0;
+            cRow++;
         }, this);
     }
 });
