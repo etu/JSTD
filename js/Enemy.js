@@ -8,16 +8,21 @@ var Enemy = new Class({
     options: {
         lastUpdateTime: 0,
         health: 255,
-        speed: 0,
+        speed: 1,
+        distance: 0,
         remove: false
     },
     initialize: function(options) {
         this.setOptions(options);
 
         this.ctx = env.options.ctxs.screen;
+
+        this.options.lastUpdateTime = Date.now();
     },
     update: function(time) {
         //console.log('updating');
+
+        this.options.distance += (time - this.options.lastUpdateTime) * this.options.speed / 10;
 
         this.options.lastUpdateTime = time;
 
@@ -33,9 +38,9 @@ var Enemy = new Class({
         this.ctx.fillStyle = this.calculateColor();
         this.ctx.beginPath();
 	this.ctx.arc(
-            200,   // X Coord
-            200,   // Y Coord
-            50,    // Radius
+            this.options.distance, // X Coord
+            200,                   // Y Coord
+            50,                    // Radius
 	    0,
 	    Math.PI * 2, true
 	);
