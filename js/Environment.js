@@ -9,6 +9,7 @@ var Environment = new Class({
         gameObjects: [],
         width: 640,
         height: 480,
+        gridSize: 40,
         pause: false
     },
     initialize: function(options) {
@@ -24,6 +25,8 @@ var Environment = new Class({
          */
         // this.options.starfield = new StarField();
         // this.options.player    = new Player();
+
+        this.options.map = new Map(this.options.ctxs.background);
 
         return this;
     },
@@ -62,6 +65,8 @@ var Environment = new Class({
         Array.each(this.options.gameObjects, function(object) {
             object.draw();
         });
+
+        this.options.map.draw();
 
 
         /**
