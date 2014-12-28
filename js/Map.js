@@ -68,6 +68,63 @@ var Map = new Class({
             cRow++;
         }, this);
 
+        /**
+         * Save all walkable tiles to pathMap
+         */
         this.pathMap = pathMap;
+
+        /**
+         * Calculate a new pathMap that knows the order of the tiles in the path
+         */
+        var currentTile = this.findStartTile();
+        var lastTile = currentTile;
+        var tile;
+
+        var pathMap = [ currentTile ];
+
+        while (this.pathMap.length > pathMap.length) {
+            tile = this.findNextTile(currentTile, lastTile);
+
+            lastTile = currentTile;
+            currentTile = tile;
+
+            pathMap.push(tile);
+        }
+
+        this.pathMap = pathMap;
+    },
+    /**
+     * Calculate starting tile of the map
+     */
+    findStartTile: function() {
+        var startTile;
+
+        Array.each(this.pathMap, function(tile) {
+            if (tile[0] == 0) {
+                startTile = tile;
+            }
+        });
+
+        return startTile;
+    },
+    /**
+     * Find next tile that intersect to currentTile and ignores previousTile
+     */
+    findNextTile: function(currentTile, previousTile) {
+        var nextTile;
+
+        Array.each(this.pathMap, function(tile) {
+            if ((tile[0] === currentTile[0] + 1 && tile[1] === currentTile[1]) || // East
+                (tile[0] === currentTile[0] && tile[1] === currentTile[1] - 1) || // North
+                (tile[0] === currentTile[0] && tile[1] === currentTile[1] + 1) || // South
+                (tile[0] === currentTile[0] - 1 && tile[1] === currentTile[1])) { // West
+
+                if (!(tile[0] === previousTile[0] && tile[1] === previousTile[1])) {
+                    nextTile = tile;
+                }
+            }
+        });
+
+        return nextTile;
     }
 });
