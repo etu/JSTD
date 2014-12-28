@@ -84,6 +84,10 @@ var Environment = new Class({
         var self = this,
             time = Date.now();
 
+        if (!this.options.pause) {
+            return;
+        }
+
         $('pausescreen').setStyle('display', 'none');
 
         /**
