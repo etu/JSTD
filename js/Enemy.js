@@ -20,10 +20,7 @@ var Enemy = new Class({
         this.options.lastUpdateTime = Date.now();
     },
     update: function(time) {
-        this.options.distance += (time - this.options.lastUpdateTime) * this.options.speed / 100;
-
-        this.options.health--;
-        this.options.speed += 0.006;
+        this.options.distance += (time - this.options.lastUpdateTime) * this.options.speed / 1000;
 
         if (this.options.health <= 0) {
             this.options.remove = true;
@@ -33,6 +30,10 @@ var Enemy = new Class({
     },
     draw: function() {
         var xy = env.options.map.getXYByDistance(this.options.distance);
+
+        if (xy === false) {
+            this.options.remove = true;
+        }
 
         this.ctx.fillStyle = this.calculateColor();
         this.ctx.beginPath();
