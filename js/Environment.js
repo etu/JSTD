@@ -10,6 +10,7 @@ var Environment = new Class({
         width: 640,
         height: 480,
         gridSize: 40,
+        skip: 0,
         pause: false
     },
     initialize: function(options) {
@@ -31,6 +32,10 @@ var Environment = new Class({
         return this;
     },
     gameLoop: function() {
+        if(this.options.pause) {
+            return;
+        }
+
         /**
          * Move ALL the things!
          */
@@ -70,15 +75,13 @@ var Environment = new Class({
 
 
         /**
-         * If not paused, request a new frame
+         * Request a new frame
          */
-        if(!this.options.pause) {
-            var self = this;
+        var self = this;
 
-            window.requestAnimationFrame((function() {
-                self.gameLoop();
-            }));
-        }
+        window.requestAnimationFrame((function() {
+            self.gameLoop();
+        }));
     },
     pause: function() {
         this.options.pause = true;
