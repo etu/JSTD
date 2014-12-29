@@ -135,7 +135,7 @@ var Map = new Class({
      * Get XY coords by Distance
      */
     getXYByDistance: function(distance) {
-        var tile;
+        var tile, nextTile;
         var coords = [ this.options.gridSize / 2, this.options.gridSize / 2 ];
         var tileNumber = distance.floor();
         var tileFragment = distance - tileNumber;
@@ -150,6 +150,35 @@ var Map = new Class({
         coords[0] += tile[0] * this.options.gridSize;
         coords[1] += tile[1] * this.options.gridSize;
 
+        // Calculate direction for next tile, calculate which of the following to execute:
+        nextTile = this.pathMap[tileNumber + 1];
+
+        coords[this.nextTileAxis(tile, nextTile)] += this.options.gridSize * tileFragment * this.nextTileOperator(tile, nextTile);
+
         return coords;
+    },
+    /**
+     * Calculate if we should add or subtract pixels to go in the direction of next tile
+     */
+    nextTileOperator: function(currentTile, nextTile) {
+        if ((currentTile[0] < nextTile[0]) ||
+            (currentTile[1] < nextTile[1])) {
+            return 1;
+        }
+        if ((currentTile[0] > nextTile[0]) ||
+            (currentTile[1] > nextTile[1])) {
+            return -1;
+        }
+    },
+    /**
+     * Figure out axis to add or subtract pixels to to go in the direction of next tile
+     */
+    nextTileAxis: function(currentTile, nextTile) {
+        if (currentTile[0] === nextTile[0]) {
+            return 1;
+        }
+        if (currentTile[1] === nextTile[1]) {
+            return 0;
+        }
     }
 });
