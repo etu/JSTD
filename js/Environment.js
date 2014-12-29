@@ -11,7 +11,8 @@ var Environment = new Class({
         height: 480,
         gridSize: 40,
         skip: 0,
-        pause: false
+        pause: false,
+        frame: undefined
     },
     initialize: function(options) {
         this.setOptions(options);
@@ -79,12 +80,14 @@ var Environment = new Class({
          */
         var self = this;
 
-        window.requestAnimationFrame((function() {
+        this.options.frame = window.requestAnimationFrame((function() {
             self.gameLoop();
         }));
     },
     pause: function() {
         this.options.pause = true;
+
+        window.cancelAnimationFrame(this.options.frame);
 
         $('pausescreen').setStyle('display', 'block');
     },
@@ -107,7 +110,7 @@ var Environment = new Class({
 
         this.options.pause = false;
 
-        window.requestAnimationFrame((function() {
+        this.options.frame = window.requestAnimationFrame((function() {
             self.gameLoop();
         }));
     }
