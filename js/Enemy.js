@@ -20,27 +20,26 @@ var Enemy = new Class({
         this.options.lastUpdateTime = Date.now();
     },
     update: function(time) {
-        //console.log('updating');
-
-        this.options.distance += (time - this.options.lastUpdateTime) * this.options.speed / 10;
-
-        this.options.lastUpdateTime = time;
+        this.options.distance += (time - this.options.lastUpdateTime) * this.options.speed / 100;
 
         this.options.health--;
+        this.options.speed += 0.006;
 
         if (this.options.health <= 0) {
             this.options.remove = true;
         }
+
+        this.options.lastUpdateTime = time;
     },
     draw: function() {
-        //console.log('drawing');
+        var xy = env.options.map.getXYByDistance(this.options.distance);
 
         this.ctx.fillStyle = this.calculateColor();
         this.ctx.beginPath();
 	this.ctx.arc(
-            this.options.distance, // X Coord
-            200,                   // Y Coord
-            50,                    // Radius
+            xy[0], // X Coord
+            xy[1], // Y Coord
+            (env.options.gridSize / 2) * 0.8,    // Radius
 	    0,
 	    Math.PI * 2, true
 	);

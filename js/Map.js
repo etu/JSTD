@@ -126,5 +126,25 @@ var Map = new Class({
         });
 
         return nextTile;
+    },
+    /**
+     * Get XY coords by Distance
+     */
+    getXYByDistance: function(distance) {
+        var tile;
+        var coords = [ this.options.gridSize / 2, this.options.gridSize / 2 ];
+        var tileNumber = distance.floor();
+        var tileFragment = distance - tileNumber;
+
+        if (!this.pathMap[tileNumber]) {
+            return false;
+        }
+
+        tile = this.pathMap[tileNumber];
+
+        coords[0] += tile[0] * this.options.gridSize;
+        coords[1] += tile[1] * this.options.gridSize;
+
+        return coords;
     }
 });
