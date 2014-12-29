@@ -153,7 +153,10 @@ var Map = new Class({
         // Calculate direction for next tile, calculate which of the following to execute:
         nextTile = this.pathMap[tileNumber + 1];
 
-        coords[this.nextTileAxis(tile, nextTile)] += this.options.gridSize * tileFragment * this.nextTileOperator(tile, nextTile);
+        if (nextTile !== undefined) {
+            coords[this.nextTileAxis(tile, nextTile)]
+                += this.options.gridSize * tileFragment * this.nextTileOperator(tile, nextTile);
+        }
 
         return coords;
     },
