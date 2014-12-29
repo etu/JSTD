@@ -7,7 +7,7 @@ var Enemy = new Class({
     Implements: Options,
     options: {
         lastUpdateTime: 0,
-        health: 255,
+        health: 511,
         speed: 1,
         distance: 0,
         remove: false
@@ -48,8 +48,19 @@ var Enemy = new Class({
 	this.ctx.fill();
     },
     calculateColor: function() {
-        var hex = this.options.health.toString(16).lpad(0, 2);
+        // Green:  #00FF00
+        // Yellow: #FFFF00
+        // Red:    #FF0000
 
-        return '#' + hex + hex + hex;
+        if (this.options.health >= 256) {
+            var val = 255 - (256 - this.options.health) * -1;
+            var hex = '#' + val.toString(16).lpad(0, 2) + 'FF00';
+
+            return hex;
+        }
+
+        var hex = '#FF' + this.options.health.toString(16).lpad(0, 2) + '00';
+
+        return hex;
     }
 });
