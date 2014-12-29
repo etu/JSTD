@@ -76,13 +76,13 @@ var Map = new Class({
         /**
          * Calculate a new pathMap that knows the order of the tiles in the path
          */
-        var currentTile = this.findStartTile();
+        var currentTile = this.findPreStartTile();
         var lastTile = currentTile;
         var tile;
 
         var pathMap = [ currentTile ];
 
-        while (this.pathMap.length > pathMap.length) {
+        while (this.pathMap.length > pathMap.length - 1) {
             tile = this.findNextTile(currentTile, lastTile);
 
             lastTile = currentTile;
@@ -91,12 +91,14 @@ var Map = new Class({
             pathMap.push(tile);
         }
 
+        pathMap.push([ tile[0] + 1, tile[1] ]);
+
         this.pathMap = pathMap;
     },
     /**
      * Calculate starting tile of the map
      */
-    findStartTile: function() {
+    findPreStartTile: function() {
         var startTile;
 
         Array.each(this.pathMap, function(tile) {
@@ -104,6 +106,8 @@ var Map = new Class({
                 startTile = tile;
             }
         });
+
+        startTile = [ startTile[0] - 1, startTile[1] ];
 
         return startTile;
     },
@@ -142,6 +146,7 @@ var Map = new Class({
 
         tile = this.pathMap[tileNumber];
 
+        // Get the rough numbers by tile location
         coords[0] += tile[0] * this.options.gridSize;
         coords[1] += tile[1] * this.options.gridSize;
 
