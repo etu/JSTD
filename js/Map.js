@@ -161,6 +161,15 @@ var Map = new Class({
         return coords;
     },
     /**
+     * Get XY coords by Tile
+     */
+    getXYByTile: function(tile) {
+        return [
+            (this.options.gridSize / 2) + this.options.gridSize * tile[0],
+            (this.options.gridSize / 2) + this.options.gridSize * tile[1]
+        ];
+    },
+    /**
      * Calculate if we should add or subtract pixels to go in the direction of next tile
      */
     nextTileOperator: function(currentTile, nextTile) {
