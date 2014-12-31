@@ -38,8 +38,8 @@ var Enemy = new Class({
         this.ctx.fillStyle = this.calculateColor();
         this.ctx.beginPath();
 	this.ctx.arc(
-            xy[0], // X Coord
-            xy[1], // Y Coord
+            xy.x, // X Coord
+            xy.y, // Y Coord
             (env.options.gridSize / 2) * 0.8,    // Radius
 	    0,
 	    Math.PI * 2, true

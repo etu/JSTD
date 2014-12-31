@@ -58,7 +58,7 @@ var Map = new Class({
                  * Add cooardinate to map of tiles that enemies may walk in
                  */
                 if (col == 1) {
-                    pathMap.push([cCol, cRow]);
+                    pathMap.push(new XY(cCol, cRow));
                 }
 
                 cCol++;
@@ -91,7 +91,7 @@ var Map = new Class({
             pathMap.push(tile);
         }
 
-        pathMap.push([ tile[0] + 1, tile[1] ]);
+        pathMap.push(new XY(tile.x + 1, tile.y));
 
         this.pathMap = pathMap;
     },
@@ -102,12 +102,12 @@ var Map = new Class({
         var startTile;
 
         Array.each(this.pathMap, function(tile) {
-            if (tile[0] == 0) {
+            if (tile.x === 0) {
                 startTile = tile;
             }
         });
 
-        startTile = [ startTile[0] - 1, startTile[1] ];
+        startTile = new XY(startTile.x - 1, startTile.y);
 
         return startTile;
     },
@@ -118,12 +118,12 @@ var Map = new Class({
         var nextTile;
 
         Array.each(this.pathMap, function(tile) {
-            if ((tile[0] === currentTile[0] + 1 && tile[1] === currentTile[1]) || // East
-                (tile[0] === currentTile[0] && tile[1] === currentTile[1] - 1) || // North
-                (tile[0] === currentTile[0] && tile[1] === currentTile[1] + 1) || // South
-                (tile[0] === currentTile[0] - 1 && tile[1] === currentTile[1])) { // West
+            if ((tile.x === currentTile.x + 1 && tile.y === currentTile.y) || // East
+                (tile.x === currentTile.x && tile.y === currentTile.y - 1) || // North
+                (tile.x === currentTile.x && tile.y === currentTile.y + 1) || // South
+                (tile.x === currentTile.x - 1 && tile.y === currentTile.y)) { // West
 
-                if (!(tile[0] === previousTile[0] && tile[1] === previousTile[1])) {
+                if (!(tile.x === previousTile.x && tile.y === previousTile.y)) {
                     nextTile = tile;
                 }
             }
@@ -136,7 +136,7 @@ var Map = new Class({
      */
     getXYByDistance: function(distance) {
         var tile, nextTile;
-        var coords = [ this.options.gridSize / 2, this.options.gridSize / 2 ];
+        var coords = new XY(this.options.gridSize / 2, this.options.gridSize / 2);
         var tileNumber = distance.floor();
         var tileFragment = distance - tileNumber;
 
@@ -147,8 +147,8 @@ var Map = new Class({
         tile = this.pathMap[tileNumber];
 
         // Get the rough numbers by tile location
-        coords[0] += tile[0] * this.options.gridSize;
-        coords[1] += tile[1] * this.options.gridSize;
+        coords.x += tile.x * this.options.gridSize;
+        coords.y += tile.y * this.options.gridSize;
 
         // Calculate direction for next tile, calculate which of the following to execute:
         nextTile = this.pathMap[tileNumber + 1];
@@ -165,20 +165,20 @@ var Map = new Class({
      */
     getXYByTile: function(tile) {
         return [
-            (this.options.gridSize / 2) + this.options.gridSize * tile[0],
-            (this.options.gridSize / 2) + this.options.gridSize * tile[1]
+            (this.options.gridSize / 2) + this.options.gridSize * tile.x,
+            (this.options.gridSize / 2) + this.options.gridSize * tile.y
         ];
     },
     /**
      * Calculate if we should add or subtract pixels to go in the direction of next tile
      */
     nextTileOperator: function(currentTile, nextTile) {
-        if ((currentTile[0] < nextTile[0]) ||
-            (currentTile[1] < nextTile[1])) {
+        if ((currentTile.x < nextTile.x) ||
+            (currentTile.y < nextTile.y)) {
             return 1;
         }
-        if ((currentTile[0] > nextTile[0]) ||
-            (currentTile[1] > nextTile[1])) {
+        if ((currentTile.x > nextTile.x) ||
+            (currentTile.y > nextTile.y)) {
             return -1;
         }
     },
@@ -186,11 +186,10 @@ var Map = new Class({
      * Figure out axis to add or subtract pixels to to go in the direction of next tile
      */
     nextTileAxis: function(currentTile, nextTile) {
-        if (currentTile[0] === nextTile[0]) {
-            return 1;
+        if (currentTile.x === nextTile.x) {
+            return 'y';
         }
-        if (currentTile[1] === nextTile[1]) {
-            return 0;
-        }
+
+        return 'x';
     }
 });
