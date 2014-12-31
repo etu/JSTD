@@ -48,18 +48,21 @@ var Enemy = new Class({
 	this.ctx.fill();
     },
     calculateColor: function() {
+        var hex, val;
+
         // Green:  #00FF00
         // Yellow: #FFFF00
         // Red:    #FF0000
 
         if (this.options.health >= 256) {
-            var val = 255 - (256 - this.options.health) * -1;
-            var hex = '#' + val.toString(16).lpad(0, 2) + 'FF00';
+            val = (255 - (256 - this.options.health) * -1).toString(16).lpad(0, 2);
 
-            return hex;
+            hex = '#' + val + 'FF00';
+        } else {
+            val = this.options.health.toString(16).lpad(0, 2);
+
+            hex = '#FF' + val + '00';
         }
-
-        var hex = '#FF' + this.options.health.toString(16).lpad(0, 2) + '00';
 
         return hex;
     }
