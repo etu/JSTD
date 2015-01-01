@@ -10,8 +10,6 @@ var Environment = new Class({
         width: 640,
         height: 480,
         gridSize: 40,
-        skip: 0,
-        pause: false,
         frame: undefined
     },
     initialize: function(options) {
@@ -33,10 +31,6 @@ var Environment = new Class({
         return this;
     },
     gameLoop: function() {
-        if(this.options.pause) {
-            return;
-        }
-
         /**
          * Move ALL the things!
          */
@@ -85,9 +79,9 @@ var Environment = new Class({
         }));
     },
     pause: function() {
-        this.options.pause = true;
-
         window.cancelAnimationFrame(this.options.frame);
+
+        this.options.frame = undefined;
 
         $('pausescreen').setStyle('display', 'block');
     },
@@ -95,7 +89,7 @@ var Environment = new Class({
         var self = this,
             time = Date.now();
 
-        if (!this.options.pause) {
+        if (this.options.frame !== undefined) {
             return;
         }
 
@@ -104,13 +98,11 @@ var Environment = new Class({
         /**
          * Update all timingevents
          */
-        Array.each(this.options.gameObjects, function (object) {
-            object.options.lastUpdateTime = time;
-        });
-
-        this.options.pause = false;
-
         this.options.frame = window.requestAnimationFrame((function() {
+            Array.each(self.options.gameObjects, function (object) {
+                object.options.lastUpdateTime = time;
+            });
+
             self.gameLoop();
         }));
     }
