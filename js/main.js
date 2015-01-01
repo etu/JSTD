@@ -1,6 +1,6 @@
 'use strict';
 
-var env, keyStates = {};
+var env, keyStates = {}, mousePos;
 
 
 /**
@@ -48,6 +48,18 @@ window.addEvent('load', function() {
     });
     window.addEvent('keyup', function(e) {
         delete keyStates[e.key];
+    });
+
+    /**
+     * Track Mouse
+     */
+    $('screen').addEvent('mousemove', function(e) {
+        var rect = $('screen').getBoundingClientRect();
+
+        mousePos = new XY(
+            e.client.x - rect.left,
+            e.client.y - rect.top
+        );
     });
 });
 
