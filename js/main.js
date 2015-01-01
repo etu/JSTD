@@ -39,7 +39,7 @@ window.addEvent('load', function() {
         }
 
         if (keyStates.p) { // Hotkey for pausing/unpausing
-            if (env.options.pause) {
+            if (env.options.frame === undefined) {
                 env.unpause();
             } else {
                 env.pause();
